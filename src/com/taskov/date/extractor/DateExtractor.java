@@ -25,7 +25,7 @@ public class DateExtractor {
 		//new data structure to keep the dates in
 		static HashMap<Integer, HashMap<CustomDate,Integer>> datesCollection = new HashMap<>();
 		
-		public static void extractDates(String text) throws WrongFormatException {
+		public void extractDates(String text) throws WrongFormatException {
 			Matcher allDatesPattern = DateExtractorConfigConstants.allDatePatterns.matcher(text);
 			while (allDatesPattern.find()) {
 				parseTheDate(allDatesPattern.group(0));
@@ -34,7 +34,7 @@ public class DateExtractor {
 		}
 		
 
-		public static int getDateFormat(String date){
+		public int getDateFormat(String date){
 			int dateFormat = 0;
 			Matcher patternDateFormat1Matcher = DateExtractorConfigConstants.patternDateFormat1.matcher(date);
 			if(patternDateFormat1Matcher.find()){
@@ -57,7 +57,7 @@ public class DateExtractor {
 			return dateFormat;
 		}
 		
-		public static CustomDate getDate(int format, String date) throws WrongFormatException {
+		public CustomDate getDate(int format, String date) throws WrongFormatException {
 			CustomDate customDate = new CustomDate();
 			Matcher monthMatcher = DateExtractorConfigConstants.patternMonthFormat.matcher(date);
 			String current;
@@ -95,14 +95,14 @@ public class DateExtractor {
 			return customDate;
 		}
 		
-		public static void parseTheDate (String date) throws WrongFormatException {
+		public void parseTheDate (String date) throws WrongFormatException {
 			int dateFormat = getDateFormat(date);
 			CustomDate customDate = getDate(dateFormat,date);
 			addDate(customDate);
 		}
 		
 		
-		public static void addDate(CustomDate date){
+		public void addDate(CustomDate date){
 			int occurencies = 1;
 			int year = date.getYear();
 			HashMap<CustomDate, Integer> datesMap = new HashMap<>();
@@ -122,7 +122,7 @@ public class DateExtractor {
 			}
 		}
 		
-		public static Integer convertMonthToInteger(String month){
+		public Integer convertMonthToInteger(String month){
 			switch(month){
 				case "January": return 1;
 				case "February": return 2;
@@ -140,7 +140,7 @@ public class DateExtractor {
 			return Integer.parseInt(month);
 		}
 		
-		public static void printDates(){
+		public void printDates(){
 			List<Integer> sortedYears = new ArrayList<Integer>();
 			Set<Integer> years = datesCollection.keySet();
 			List<CustomDate> sortedDates = new ArrayList<CustomDate>();
@@ -167,7 +167,8 @@ public class DateExtractor {
 					+ "DigitalJournal.com. August 24, 2011. Retrieved September 18, 2011. "
 					+ "Press release source: PRWeb (Vocus). "
 					+ "Dan David prize 2014 winners\". May 15, 2014. Retrieved May 20, 2014.\"";
-			extractDates(text);
+			DateExtractor de = new DateExtractor();
+			de.extractDates(text);
 		}
 	}
 
